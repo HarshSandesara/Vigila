@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vigila/models/user.dart';
+import 'package:vigila/models/emergency_contact.dart';
+import 'package:sms_maintained/sms.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -143,58 +147,26 @@ class EmergencyButton extends StatefulWidget {
 
 class _EmergencyButtonState extends State<EmergencyButton> {
   Position _currentPosition;
+  final firestoreInstance = FirebaseFirestore.instance;
 
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
-  _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  void _getEmergencyContacts() async {
+    CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      print(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return print(
-            'Location permissions are denied (actual value: $permission).');
-      }
-    }
-
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
+    // Get emergency contacts from firestore and them to the list
+    await firestoreInstance
+        .collection("users")
+        .doc(user.uid)
+        .collection("emergency_contacts")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        String contactNumber = result.data()['contact_number'];
+        String name = result.data()['name'];
+        EmergencyContact emergencyContact = new EmergencyContact(contactNumber: contactNumber, name: name);
+        // Send sms to contacts
+        emergencyContact.sendSMS();
       });
-    }).catchError((e) {
-      print(e);
     });
-  }
-
-  // This function shows the Location of the user as a snackbar
-  void showSnackbar(BuildContext context) async {
-    await _getCurrentLocation();
-    if (_currentPosition != null) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(
-              "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
-          duration: Duration(seconds: 5)));
-    } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text("Getting Location..."),
-          duration: Duration(seconds: 5)));
-    }
   }
 
   Widget build(BuildContext context) {
@@ -209,7 +181,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 style: TextStyle(fontSize: 24),
               ),
               onPressed: () {
-                showSnackbar(context);
+                _getEmergencyContacts();
               },
               style: ElevatedButton.styleFrom(
                   shape: CircleBorder(), primary: Colors.red),

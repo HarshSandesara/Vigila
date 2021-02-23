@@ -28,6 +28,12 @@
 @import geolocator;
 #endif
 
+#if __has_include(<sms_maintained/SmsPlugin.h>)
+#import <sms_maintained/SmsPlugin.h>
+#else
+@import sms_maintained;
+#endif
+
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
@@ -35,6 +41,7 @@
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [GeolocatorPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeolocatorPlugin"]];
+  [SmsPlugin registerWithRegistrar:[registry registrarForPlugin:@"SmsPlugin"]];
 }
 
 @end
