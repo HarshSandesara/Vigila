@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928216375559",
+    "project_id": "vigila-trial",
+    "storage_bucket": "vigila-trial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928216375559:android:e00f5f73a85646a725a5a2",
+        "android_client_info": {
+          "package_name": "com.example.vigila"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928216375559-gponn31nrulu4o8jij5ooo6veitav0un.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZw2_7r673i-G78Y1TgaA40GdJ264OF04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928216375559-gponn31nrulu4o8jij5ooo6veitav0un.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
