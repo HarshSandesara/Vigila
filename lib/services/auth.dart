@@ -6,7 +6,12 @@ class AuthService {
 
   // create user obj based on User
   CustomUser _userFromFirebaseUser(User user) {
-    return user!= null ? CustomUser(uid: user.uid) : null;
+    return user != null ? CustomUser(uid: user.uid) : null;
+  }
+
+  // auth change user stream
+  Stream<CustomUser> get user {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
   // Sign in Anon
@@ -26,4 +31,12 @@ class AuthService {
   // Register with Email and Password
 
   // Sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

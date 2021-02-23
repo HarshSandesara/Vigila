@@ -1,65 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:geolocator/geolocator.dart';
-
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  List<PageViewModel> getPages() {
-    return [
-      PageViewModel(
-        title: "Welcome",
-        body: "",
-      ),
-      PageViewModel(
-        title: "Everything to keep you safe, right here",
-        body: "",
-      ),
-      PageViewModel(
-        title: "SOS Button",
-        body: "Call anyone who can help",
-      ),
-      PageViewModel(
-        title: "Emergency Contacts",
-        body: "Inform people closest to you",
-      ),
-      PageViewModel(
-        title: "First Aid Guidelines",
-        body: "Provide Immediate Help to Victims",
-      ),
-      PageViewModel(
-        title: "More features",
-        body: "Let's Go!",
-      ),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Vigila"),
-      ),
-      body: IntroductionScreen(
-        globalBackgroundColor: Colors.white,
-        pages: getPages(),
-        showNextButton: true,
-        showSkipButton: true,
-        skip: Text("Skip"),
-        done: Text("Got it "),
-        onDone: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyNavigationBar()),
-          );
-        },
-      ),
-    );
-  }
-}
+import 'package:vigila/services/auth.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -69,6 +10,8 @@ class MyNavigationBar extends StatefulWidget {
 }
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
+  final AuthService _auth = AuthService();
+
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
     ListView(
@@ -105,7 +48,17 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Vigila'), backgroundColor: Colors.blue),
+      appBar: AppBar(
+          title: const Text('Vigila'),
+          backgroundColor: Colors.blue,
+          actions: <Widget>[
+            FlatButton.icon(
+                icon: Icon(Icons.person, color: Colors.white),
+                label: Text('Logout', style: TextStyle(color: Colors.white)),
+                onPressed: () async {
+                  await _auth.signOut();
+                }),
+          ]),
       body: Center(child: _widgetOptions.elementAt(focusedPage)),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
