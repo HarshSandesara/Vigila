@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:vigila/services/auth.dart';
+import 'package:vigila/models/emergency_contact.dart';
+import 'package:vigila/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -37,6 +40,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     EmergencyButton(),
     Text('Profile Page',
         style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
+    Text('Emergency Contacts Page',
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
   ];
 
   void _onItemTapped(int index) {
@@ -50,7 +55,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     return Scaffold(
       appBar: AppBar(
           title: const Text('Vigila'),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.purple[700],
           actions: <Widget>[
             FlatButton.icon(
                 icon: Icon(Icons.person, color: Colors.white),
@@ -63,20 +68,23 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(Icons.book),
-                // ignore: deprecated_member_use
-                title: Text('Guidelines'),
-                backgroundColor: Colors.blue),
+              icon: Icon(Icons.book),
+              label: 'Guidelines',
+              backgroundColor: Colors.purple,
+            ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                // ignore: deprecated_member_use
-                title: Text('Home'),
-                backgroundColor: Colors.blue),
+                label: 'Home',
+                backgroundColor: Colors.purple),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              // ignore: deprecated_member_use
-              title: Text('Profile'),
-              backgroundColor: Colors.blue,
+              label: 'Profile',
+              backgroundColor: Colors.purple,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.contacts),
+              label: 'Contacts',
+              backgroundColor: Colors.purple,
             ),
           ],
           currentIndex: focusedPage,
@@ -96,6 +104,7 @@ class EmergencyButton extends StatefulWidget {
 
 class _EmergencyButtonState extends State<EmergencyButton> {
   Position _currentPosition;
+  final firestoreInstance = FirebaseFirestore.instance;
 
   /// Determine the current position of the device.
   ///
@@ -150,6 +159,29 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     }
   }
 
+  void _getEmergencyContacts(Position currentPosition) async {
+    CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
+
+    // Get emergency contacts from firestore and them to the list
+    await firestoreInstance
+        .collection("users")
+        .doc(user.uid)
+        .collection("emergency_contacts")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        String contactNumber = result.data()['contact_number'];
+        String name = result.data()['name'];
+        print(contactNumber);
+        print(name);
+        EmergencyContact emergencyContact =
+            new EmergencyContact(contactNumber: contactNumber, name: name);
+        // Send sms to contacts
+        emergencyContact.sendSMS(currentPosition);
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Builder(
       builder: (BuildContext context) {
@@ -161,8 +193,10 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 'S.O.S.',
                 style: TextStyle(fontSize: 24),
               ),
-              onPressed: () {
-                showSnackbar(context);
+              onPressed: () async {
+                // showSnackbar(context);
+                await _getCurrentLocation();
+                _getEmergencyContacts(_currentPosition);
               },
               style: ElevatedButton.styleFrom(
                   shape: CircleBorder(), primary: Colors.red),

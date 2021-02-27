@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vigila/models/user.dart';
+import 'package:vigila/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -27,8 +28,46 @@ class AuthService {
   }
 
   // Sign In with Email and Passwrod
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Your email address appears to be malformed";
+        case "user-disabled":
+          return "User with this email has been disabled";
+        case "user-not-found":
+          return "User with this email does not exist";
+        case "wrong-password":
+          return "Your password is wrong or hasn't been set";
+      }
+    }
+  }
 
   // Register with Email and Password
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user;
+
+      // create a new document for the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData("A+", "John", "Doe");
+      return _userFromFirebaseUser(user);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          return "Your email address appears to be malformed";
+        case "email-already-in-use":
+          return "An account already exists with this email";
+        // Weak password case is not checked as it is handled on the front end
+      }
+    }
+  }
 
   // Sign out
   Future signOut() async {

@@ -4,15 +4,15 @@ import 'package:vigila/services/auth.dart';
 import 'package:vigila/shared/constants.dart';
 import 'package:vigila/shared/loading.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
@@ -28,13 +28,12 @@ class _SignInState extends State<SignIn> {
         ? Loading()
         : Scaffold(
             appBar: new AppBar(
-              title: Text("Sign In to Vigila"),
+              title: Text("Sign Up to Vigila"),
               backgroundColor: Colors.purple[700],
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.person, color: Colors.white),
-                  label:
-                      Text('Register', style: TextStyle(color: Colors.white)),
+                  label: Text('Sign In', style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     widget.toggleView();
                   },
@@ -60,8 +59,9 @@ class _SignInState extends State<SignIn> {
                     TextFormField(
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Password'),
-                      validator: (val) =>
-                          val.isEmpty ? "Enter a password" : null,
+                      validator: (val) => val.length < 6
+                          ? "Enter a password 6+ characters long"
+                          : null,
                       obscureText: true,
                       onChanged: (val) {
                         setState(() => password = val);
@@ -71,14 +71,14 @@ class _SignInState extends State<SignIn> {
                     RaisedButton(
                       color: Colors.purple[900],
                       child: Text(
-                        'Sign In',
+                        'Register',
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           setState(() => loading = true);
                           dynamic result = await _auth
-                              .signInWithEmailAndPassword(email, password);
+                              .registerWithEmailAndPassword(email, password);
                           if (!(result is CustomUser)) {
                             setState(() {
                               error = result;
@@ -91,9 +91,8 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 12.0),
                     Text(
                       error,
-                      textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
-                    ),
+                    )
                   ],
                 ),
               ),

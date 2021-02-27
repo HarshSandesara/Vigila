@@ -40,7 +40,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Vigila")),
+      appBar: new AppBar(
+        title: Text("Vigila"),
+        backgroundColor: Colors.purple[700],
+      ),
       body: IntroductionScreen(
         globalBackgroundColor: Colors.white,
         pages: getPages(),
@@ -49,7 +52,7 @@ class _MainPageState extends State<MainPage> {
         skip: Text("Skip"),
         done: Text("Got it "),
         onDone: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => IntroLoginConnector()),
           );
