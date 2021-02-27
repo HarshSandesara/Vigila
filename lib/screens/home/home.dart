@@ -139,8 +139,6 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       setState(() {
         _currentPosition = position;
       });
-    }).catchError((e) {
-      print(e);
     });
   }
 
