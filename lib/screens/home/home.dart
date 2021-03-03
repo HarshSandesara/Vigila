@@ -4,6 +4,9 @@ import 'package:vigila/services/auth.dart';
 import 'package:vigila/models/emergency_contact.dart';
 import 'package:vigila/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vigila/services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:vigila/screens/home/emergency_contacts.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -40,8 +43,9 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
     EmergencyButton(),
     Text('Profile Page',
         style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
-    Text('Emergency Contacts Page',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
+    // Text('Emergency Contacts Page',
+    //     style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
+    EmergencyContacts()
   ];
 
   void _onItemTapped(int index) {
@@ -52,45 +56,48 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text('Vigila'),
-          backgroundColor: Colors.purple[700],
-          actions: <Widget>[
-            FlatButton.icon(
-                icon: Icon(Icons.person, color: Colors.white),
-                label: Text('Logout', style: TextStyle(color: Colors.white)),
-                onPressed: () async {
-                  await _auth.signOut();
-                }),
-          ]),
-      body: Center(child: _widgetOptions.elementAt(focusedPage)),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: 'Guidelines',
-              backgroundColor: Colors.purple,
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.purple),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-              backgroundColor: Colors.purple,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.contacts),
-              label: 'Contacts',
-              backgroundColor: Colors.purple,
-            ),
-          ],
-          currentIndex: focusedPage,
-          selectedItemColor: Colors.black,
-          iconSize: 20,
-          onTap: _onItemTapped),
+    return StreamProvider<QuerySnapshot>.value(
+      value: DatabaseService().users,
+      child: Scaffold(
+        appBar: AppBar(
+            title: const Text('Vigila'),
+            backgroundColor: Colors.purple[700],
+            actions: <Widget>[
+              FlatButton.icon(
+                  icon: Icon(Icons.person, color: Colors.white),
+                  label: Text('Logout', style: TextStyle(color: Colors.white)),
+                  onPressed: () async {
+                    await _auth.signOut();
+                  }),
+            ]),
+        body: Center(child: _widgetOptions.elementAt(focusedPage)),
+        bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                label: 'Guidelines',
+                backgroundColor: Colors.purple,
+              ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                  backgroundColor: Colors.purple),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+                backgroundColor: Colors.purple,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.contacts),
+                label: 'Contacts',
+                backgroundColor: Colors.purple,
+              ),
+            ],
+            currentIndex: focusedPage,
+            selectedItemColor: Colors.black,
+            iconSize: 20,
+            onTap: _onItemTapped),
+      ),
     );
   }
 }
