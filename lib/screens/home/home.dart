@@ -3,6 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:vigila/services/auth.dart';
 import 'package:vigila/models/emergency_contact.dart';
 import 'package:vigila/models/user.dart';
+import 'package:vigila/screens/home/profile.dart';
+import 'package:vigila/screens/home/emergency.dart';
+import 'package:vigila/screens/home/guidelines.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyNavigationBar extends StatefulWidget {
@@ -17,31 +20,10 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
-    ListView(
-      children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.add_alert),
-          title: Text('First Aid'),
-        ),
-        ListTile(
-          leading: Icon(Icons.list),
-          title: Text('RICE'),
-        ),
-        ListTile(
-          leading: Icon(Icons.favorite),
-          title: Text('CPR'),
-        ),
-        ListTile(
-          leading: Icon(Icons.list_alt),
-          title: Text('BLS'),
-        ),
-      ],
-    ),
+    Guidelines(),
     EmergencyButton(),
-    Text('Profile Page',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
-    Text('Emergency Contacts Page',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.normal)),
+    Profile(),
+    Emergency(),
   ];
 
   void _onItemTapped(int index) {
