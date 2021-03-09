@@ -134,7 +134,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       }
     }
 
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
@@ -158,7 +158,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getEmergencyContacts(Position currentPosition) async {
-    CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
+    CustomUser user = CustomUser(uid: 'GtiusuEilYcNufniR1ka');
 
     // Get emergency contacts from firestore and them to the list
     await firestoreInstance
@@ -167,7 +167,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         .collection("emergency_contacts")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
+      querySnapshot.docs.forEach((result) async {
         String contactNumber = result.data()['contact_number'];
         String name = result.data()['name'];
         print(contactNumber);
@@ -175,7 +175,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         EmergencyContact emergencyContact =
             new EmergencyContact(contactNumber: contactNumber, name: name);
         // Send sms to contacts
-        emergencyContact.sendSMS(currentPosition);
+        await emergencyContact.sendSMS(currentPosition);
       });
     });
   }

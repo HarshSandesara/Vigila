@@ -7,7 +7,7 @@ class EmergencyContact {
 
   EmergencyContact({this.name, this.contactNumber});
 
-  void sendSMS(Position currentPosition) {
+  Future<void> sendSMS(Position currentPosition) async {
     SmsSender sender = SmsSender();
     SmsMessage message = SmsMessage(contactNumber,
         'Please come and rescue me! I am at the location: maps.google.com/?ll=${currentPosition.latitude},${currentPosition.longitude}');
@@ -18,6 +18,6 @@ class EmergencyContact {
     //     print("SMS is delivered!");
     //   }
     // });
-    sender.sendSms(message);
+    await sender.sendSms(message);
   }
 }
