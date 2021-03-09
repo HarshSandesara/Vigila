@@ -7,6 +7,7 @@ import 'package:vigila/screens/home/profile.dart';
 import 'package:vigila/screens/home/emergency.dart';
 import 'package:vigila/screens/home/guidelines.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -162,6 +163,35 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     });
   }
 
+  void _getUsersInRadius() async {
+    final geo = Geoflutterfire();
+    final _firestore = FirebaseFirestore.instance;
+    var collectionReference = _firestore.collection('users');
+    double radius = 0.1;
+    String field = 'position';
+
+    GeoFirePoint center = geo.point(
+        latitude: _currentPosition.latitude,
+        longitude: _currentPosition.longitude);
+
+    Stream<List<DocumentSnapshot>> stream = geo
+        .collection(collectionRef: collectionReference)
+        .within(center: center, radius: radius, field: field);
+
+    stream.listen((List<DocumentSnapshot> documentList) {
+      documentList.forEach((DocumentSnapshot document) async {
+        String contactNumber = document.data()['contact_number'];
+        String name = document.data()['fname'] + document.data()['lname'];
+        print(contactNumber);
+        print(name);
+        EmergencyContact emergencyContact =
+            new EmergencyContact(contactNumber: contactNumber, name: name);
+        // Send sms to contacts
+        await emergencyContact.sendSMS(_currentPosition);
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Builder(
       builder: (BuildContext context) {
@@ -177,6 +207,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 // showSnackbar(context);
                 await _getCurrentLocation();
                 _getEmergencyContacts(_currentPosition);
+                _getUsersInRadius();
               },
               style: ElevatedButton.styleFrom(
                   shape: CircleBorder(), primary: Colors.red),
