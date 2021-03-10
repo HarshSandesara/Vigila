@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vigila/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:vigila/screens/home/emergency_contacts.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -125,7 +126,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       }
     }
 
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
@@ -159,7 +160,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         .collection("emergency_contacts")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
+      querySnapshot.docs.forEach((result) async {
         String contactNumber = result.data()['contact_number'];
         String name = result.data()['name'];
         print(contactNumber);
@@ -167,7 +168,36 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         EmergencyContact emergencyContact =
             new EmergencyContact(contactNumber: contactNumber, name: name);
         // Send sms to contacts
-        emergencyContact.sendSMS(currentPosition);
+        await emergencyContact.sendSMS(currentPosition);
+      });
+    });
+  }
+
+  void _getUsersInRadius() async {
+    final geo = Geoflutterfire();
+    final _firestore = FirebaseFirestore.instance;
+    var collectionReference = _firestore.collection('users');
+    double radius = 0.1;
+    String field = 'position';
+
+    GeoFirePoint center = geo.point(
+        latitude: _currentPosition.latitude,
+        longitude: _currentPosition.longitude);
+
+    Stream<List<DocumentSnapshot>> stream = geo
+        .collection(collectionRef: collectionReference)
+        .within(center: center, radius: radius, field: field);
+
+    stream.listen((List<DocumentSnapshot> documentList) {
+      documentList.forEach((DocumentSnapshot document) async {
+        String contactNumber = document.data()['contact_number'];
+        String name = document.data()['fname'] + document.data()['lname'];
+        print(contactNumber);
+        print(name);
+        EmergencyContact emergencyContact =
+            new EmergencyContact(contactNumber: contactNumber, name: name);
+        // Send sms to contacts
+        await emergencyContact.sendSMS(_currentPosition);
       });
     });
   }
@@ -187,6 +217,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 // showSnackbar(context);
                 await _getCurrentLocation();
                 _getEmergencyContacts(_currentPosition);
+                _getUsersInRadius();
               },
               style: ElevatedButton.styleFrom(
                   shape: CircleBorder(), primary: Colors.red),
