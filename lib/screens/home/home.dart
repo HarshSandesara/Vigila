@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:vigila/services/auth.dart';
@@ -92,6 +93,8 @@ class EmergencyButton extends StatefulWidget {
 
 class _EmergencyButtonState extends State<EmergencyButton> {
   Position _currentPosition;
+  final AuthService _auth = AuthService();
+
   final firestoreInstance = FirebaseFirestore.instance;
 
   /// Determine the current position of the device.
@@ -146,7 +149,8 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getEmergencyContacts(Position currentPosition) async {
-    CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
+    // CustomUser user = CustomUser(uid: 'GtiusuEilYcNufniR1ka');
+    User user = FirebaseAuth.instance.currentUser;
 
     // Get emergency contacts from firestore and them to the list
     await firestoreInstance
