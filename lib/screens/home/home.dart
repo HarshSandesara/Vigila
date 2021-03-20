@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:vigila/services/auth.dart';
@@ -86,6 +87,7 @@ class EmergencyButton extends StatefulWidget {
 
 class _EmergencyButtonState extends State<EmergencyButton> {
   Position _currentPosition;
+  final AuthService _auth = AuthService();
   final firestoreInstance = FirebaseFirestore.instance;
 
   /// Determine the current position of the device.
@@ -140,8 +142,35 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getEmergencyContacts(Position currentPosition) async {
-    CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
+    User user = FirebaseAuth.instance.currentUser;
+    // CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
+    // Stream<CustomUser> customUserStream = _auth.user;
+    // print(customUserStream);
+    // CustomUser user;
 
+    // customUserStream.listen((customUser) {
+      
+    //   while(user == null) {
+    //     user = customUser;
+    //     print(user.uid);
+    //   }
+    // });
+
+    // Future<CustomUser> CustomUserStream(Stream<CustomUser> customUserStream) async {
+    //   var sum = 0;
+    //   await for (var value in stream) {
+    //     sum += value;
+    //   }
+    //   return sum;
+    //   var customUser;
+    //   // await for (var value in customUserStream) {
+    //   //   customUser = value;
+    //   //   break;
+    //   // }
+    //   // return customUser;
+    // }
+
+    // CustomUserStream(customUserStream).then((user) => user);
     // Get emergency contacts from firestore and them to the list
     await firestoreInstance
         .collection("users")
