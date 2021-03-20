@@ -28,7 +28,7 @@ class EditContactScreen extends State<EditContact> {
     return TextFormField(
       initialValue: name,
       focusNode: node,
-      maxLength: 50,
+      // maxLength: 50,
       decoration: InputDecoration(
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(

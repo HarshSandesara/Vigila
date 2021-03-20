@@ -8,6 +8,7 @@ import 'package:vigila/screens/home/profile.dart';
 import 'package:vigila/screens/home/emergency.dart';
 import 'package:vigila/screens/home/guidelines.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -118,7 +119,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
       }
     }
 
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
@@ -142,35 +143,9 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getEmergencyContacts(Position currentPosition) async {
+    // CustomUser user = CustomUser(uid: 'GtiusuEilYcNufniR1ka');
     User user = FirebaseAuth.instance.currentUser;
-    // CustomUser user = CustomUser(uid: 'KrkmQMHewgexVNJFpz8H');
-    // Stream<CustomUser> customUserStream = _auth.user;
-    // print(customUserStream);
-    // CustomUser user;
 
-    // customUserStream.listen((customUser) {
-      
-    //   while(user == null) {
-    //     user = customUser;
-    //     print(user.uid);
-    //   }
-    // });
-
-    // Future<CustomUser> CustomUserStream(Stream<CustomUser> customUserStream) async {
-    //   var sum = 0;
-    //   await for (var value in stream) {
-    //     sum += value;
-    //   }
-    //   return sum;
-    //   var customUser;
-    //   // await for (var value in customUserStream) {
-    //   //   customUser = value;
-    //   //   break;
-    //   // }
-    //   // return customUser;
-    // }
-
-    // CustomUserStream(customUserStream).then((user) => user);
     // Get emergency contacts from firestore and them to the list
     await firestoreInstance
         .collection("users")
@@ -178,7 +153,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         .collection("emergency_contacts")
         .get()
         .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
+      querySnapshot.docs.forEach((result) async {
         String contactNumber = result.data()['contact_number'];
         String name = result.data()['name'];
         print(contactNumber);
@@ -186,7 +161,36 @@ class _EmergencyButtonState extends State<EmergencyButton> {
         EmergencyContact emergencyContact =
             new EmergencyContact(contactNumber: contactNumber, name: name);
         // Send sms to contacts
-        emergencyContact.sendSMS(currentPosition);
+        await emergencyContact.sendSMS(currentPosition);
+      });
+    });
+  }
+
+  void _getUsersInRadius() async {
+    final geo = Geoflutterfire();
+    final _firestore = FirebaseFirestore.instance;
+    var collectionReference = _firestore.collection('users');
+    double radius = 0.1;
+    String field = 'position';
+
+    GeoFirePoint center = geo.point(
+        latitude: _currentPosition.latitude,
+        longitude: _currentPosition.longitude);
+
+    Stream<List<DocumentSnapshot>> stream = geo
+        .collection(collectionRef: collectionReference)
+        .within(center: center, radius: radius, field: field);
+
+    stream.listen((List<DocumentSnapshot> documentList) {
+      documentList.forEach((DocumentSnapshot document) async {
+        String contactNumber = document.data()['contact_number'];
+        String name = document.data()['fname'] + document.data()['lname'];
+        print(contactNumber);
+        print(name);
+        EmergencyContact emergencyContact =
+            new EmergencyContact(contactNumber: contactNumber, name: name);
+        // Send sms to contacts
+        await emergencyContact.sendSMS(_currentPosition);
       });
     });
   }
@@ -206,6 +210,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 // showSnackbar(context);
                 await _getCurrentLocation();
                 _getEmergencyContacts(_currentPosition);
+                _getUsersInRadius();
               },
               style: ElevatedButton.styleFrom(
                   shape: CircleBorder(), primary: Colors.red),

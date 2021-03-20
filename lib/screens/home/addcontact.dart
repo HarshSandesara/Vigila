@@ -23,7 +23,7 @@ class AddContactScreen extends State<AddContact> {
     FocusNode node = new FocusNode();
     return TextFormField(
       focusNode: node,
-      maxLength: 50,
+      // maxLength: 50,
       decoration: InputDecoration(
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(
