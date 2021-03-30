@@ -9,6 +9,31 @@ import 'package:vigila/screens/home/emergency.dart';
 import 'package:vigila/screens/home/guidelines.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:workmanager/workmanager.dart';
+
+// const fetchBackground = "fetchBackground";
+
+// void callbackDispatcher() {
+
+//   Workmanager.executeTask((task, inputData) async {
+//     switch (task) {
+//       case fetchBackground:
+//         //Geolocator geoLocator = Geolocator()..forceAndroidLocationManager = true;
+//         Position position = await Geolocator.getCurrentPosition(
+//             desiredAccuracy: LocationAccuracy.best);
+//         print(position);
+//         // GeoFirePoint myLocation = Geoflutterfire().point(
+//         //     latitude: position.latitude, longitude: position.longitude);
+//         // print(myLocation);
+//         // FirebaseFirestore.instance
+//         //     .collection("users")
+//         //     .doc(FirebaseAuth.instance.currentUser.uid)
+//         //     .update({"position": myLocation});
+//         break;
+//     }
+//     return Future.value(true);
+//   });
+// }
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -19,6 +44,23 @@ class MyNavigationBar extends StatefulWidget {
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
   final AuthService _auth = AuthService();
+
+
+  @override
+  void initState() {
+    super.initState();
+    // Workmanager.initialize(
+    //   callbackDispatcher,
+    //   isInDebugMode: true,
+    // );
+
+    // Workmanager.registerPeriodicTask(
+    //   "1",
+    //   fetchBackground,
+    //   frequency: Duration(minutes: 15),
+    // );
+    
+  }
 
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
@@ -36,6 +78,8 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    
+    
     return Scaffold(
       appBar: AppBar(
           title: const Text('Vigila'),
@@ -95,6 +139,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
+  
   _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
