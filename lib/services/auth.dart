@@ -4,6 +4,7 @@ import 'package:vigila/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  String _loginOrRegister;
 
   // create user obj based on User
   CustomUser _userFromFirebaseUser(User user) {
@@ -33,6 +34,7 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+      _loginOrRegister = "login";
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -54,7 +56,7 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
-
+      _loginOrRegister = "register";
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid).updateUserData("A+", "John", "Doe");
       return _userFromFirebaseUser(user);

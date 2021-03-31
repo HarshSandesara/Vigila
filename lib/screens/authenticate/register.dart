@@ -68,6 +68,23 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                     SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Confirm Password'),
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return "Enter the same password as above";
+                        } else if (val == password) {
+                          return null;
+                        } else {
+                          return "Passwords do not match";
+                        }},
+                      obscureText: true,
+                      onChanged: (val) {
+                        setState(() => password = val);
+                      },
+                    ),
+                    SizedBox(height: 20.0),
                     RaisedButton(
                       color: Colors.purple[900],
                       child: Text(
