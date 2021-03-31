@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vigila/models/emergency_contact.dart';
 import 'package:vigila/shared/loading.dart';
+import 'package:vigila/screens/home/addcontact.dart';
+import 'package:vigila/screens/home/editcontact.dart';
 
 class Emergency extends StatefulWidget {
   @override
@@ -42,10 +44,56 @@ class _EmergencyState extends State<Emergency> {
   }
 
   _EmergencyState() {
-    _getEmergencyContacts().then((val) => setState(() {
+    _getEmergencyContacts().then(
+      (val) => setState(
+        () {
           _emergencyContacts = val;
           loading = false;
-        }));
+        },
+      ),
+    );
+  }
+
+  Future<String> createAlertDialog(
+      BuildContext context, String name, String email, String phoneNumber) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              title: Text(
+                "What do you want to do with $name?",
+                style: TextStyle(fontSize: 15),
+              ),
+              actions: <Widget>[
+                MaterialButton(
+                    elevation: 5,
+                    child: Text('Call'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                MaterialButton(
+                    elevation: 5,
+                    child: Text('Edit'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditContact(
+                              name: name,
+                              email: email,
+                              phoneNumber: phoneNumber),
+                        ),
+                      );
+                    }),
+                MaterialButton(
+                    elevation: 5,
+                    child: Text('Delete'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    })
+              ]);
+        });
   }
 
   @override
@@ -54,54 +102,70 @@ class _EmergencyState extends State<Emergency> {
         ? Loading()
         : Scaffold(
             body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Your Emergency Contact List",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.purple[900],
-                        fontWeight: FontWeight.w800),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-                Expanded(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Your Emergency Contact List",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.purple[900],
+                          fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                  Expanded(
                     child: ListView.builder(
-                  itemCount: _emergencyContacts.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(Icons.person, size: 40),
-                        title: Text(_emergencyContacts[index].name),
-                        subtitle: Text(
-                          _emergencyContacts[index].contactNumber,
-                          style: TextStyle(
-                            color: Colors.purple,
+                      itemCount: _emergencyContacts.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: ListTile(
+                            leading: Icon(Icons.person, size: 40),
+                            title: Text(_emergencyContacts[index].name),
+                            subtitle: Text(
+                              _emergencyContacts[index].contactNumber,
+                              style: TextStyle(
+                                color: Colors.purple,
+                              ),
+                            ),
+                            trailing: Icon(Icons.call),
+                            onTap: () {
+                              createAlertDialog(
+                                  context,
+                                  _emergencyContacts[index].name,
+                                  "sandesara.harsh@gmail.com",
+                                  _emergencyContacts[index].contactNumber);
+                            },
                           ),
-                        ),
-                        trailing: Icon(Icons.call),
-                        onTap: () {},
-                      ),
-                    );
-                  },
-                )),
-                Center(
-                  child: FlatButton(
-                      onPressed: () {},
-                      child: Text('Add Contact'),
-                      color: Colors.purple.shade400,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)))),
-                ),
-              ],
+                        );
+                      },
+                    ),
+                  ),
+                  Center(
+                    child: FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddContact(),
+                            ),
+                          );
+                        },
+                        child: Text('Add Contact'),
+                        color: Colors.purple.shade400,
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5)))),
+                  ),
+                ],
+              ),
             ),
-          ));
+          );
   }
 }

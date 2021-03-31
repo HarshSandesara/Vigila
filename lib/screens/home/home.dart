@@ -12,6 +12,31 @@ import 'package:vigila/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:vigila/screens/home/emergency_contacts.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:workmanager/workmanager.dart';
+
+// const fetchBackground = "fetchBackground";
+
+// void callbackDispatcher() {
+
+//   Workmanager.executeTask((task, inputData) async {
+//     switch (task) {
+//       case fetchBackground:
+//         //Geolocator geoLocator = Geolocator()..forceAndroidLocationManager = true;
+//         Position position = await Geolocator.getCurrentPosition(
+//             desiredAccuracy: LocationAccuracy.best);
+//         print(position);
+//         // GeoFirePoint myLocation = Geoflutterfire().point(
+//         //     latitude: position.latitude, longitude: position.longitude);
+//         // print(myLocation);
+//         // FirebaseFirestore.instance
+//         //     .collection("users")
+//         //     .doc(FirebaseAuth.instance.currentUser.uid)
+//         //     .update({"position": myLocation});
+//         break;
+//     }
+//     return Future.value(true);
+//   });
+// }
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
@@ -22,6 +47,23 @@ class MyNavigationBar extends StatefulWidget {
 
 class _MyNavigationBarState extends State<MyNavigationBar> {
   final AuthService _auth = AuthService();
+
+
+  @override
+  void initState() {
+    super.initState();
+    // Workmanager.initialize(
+    //   callbackDispatcher,
+    //   isInDebugMode: true,
+    // );
+
+    // Workmanager.registerPeriodicTask(
+    //   "1",
+    //   fetchBackground,
+    //   frequency: Duration(minutes: 15),
+    // );
+    
+  }
 
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
@@ -95,13 +137,13 @@ class EmergencyButton extends StatefulWidget {
 class _EmergencyButtonState extends State<EmergencyButton> {
   Position _currentPosition;
   final AuthService _auth = AuthService();
-
   final firestoreInstance = FirebaseFirestore.instance;
 
   /// Determine the current position of the device.
   ///
   /// When the location services are not enabled or permissions
   /// are denied the `Future` will return an error.
+  
   _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
