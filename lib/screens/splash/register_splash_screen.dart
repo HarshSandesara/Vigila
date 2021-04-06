@@ -1,11 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:vigila/screens/home/home.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
-// import 'package:flutkart/utils/flutkart.dart';
-// import 'package:flutkart/utils/my_navigator.dart';
 
 class RegisterSplashScreen extends StatefulWidget {
   @override
