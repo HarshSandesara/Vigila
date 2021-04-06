@@ -5,8 +5,6 @@ import 'package:vigila/screens/home/introduction.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
-import 'dart:isolate';
-import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
 Future<void> requestPermission() async {

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vigila/main.dart';
 import 'package:vigila/screens/authenticate/authenticate.dart';
 import 'package:vigila/models/user.dart';
 import 'package:vigila/screens/home/home.dart';
-import 'package:vigila/screens/splash/loginsplashscreen.dart';
-import 'package:vigila/screens/splash/registersplashscreen.dart';
+import 'package:vigila/screens/splash/login_splash_screen.dart';
+import 'package:vigila/screens/splash/register_splash_screen.dart';
 
 class Wrapper extends StatefulWidget {
   @override
