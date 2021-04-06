@@ -4,6 +4,8 @@ import 'package:vigila/screens/home/emergency.dart';
 import 'package:vigila/services/auth.dart';
 import 'package:vigila/shared/constants.dart';
 import 'package:vigila/shared/loading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddContact extends StatefulWidget {
   @override
@@ -16,6 +18,12 @@ class AddContactScreen extends State<AddContact> {
   String _name;
   String _email;
   String _phoneNumber;
+  final _firestoreInstance = FirebaseFirestore.instance;
+  User user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -134,7 +142,11 @@ class AddContactScreen extends State<AddContact> {
                         return;
                       }
                       _formKey.currentState.save();
-
+                      _firestoreInstance
+                          .collection("users")
+                          .doc(user.uid)
+                          .collection("emergency_contacts")
+                          .add({"contact_number": _phoneNumber, "name": _name});
                       Navigator.of(context).pop();
                     },
                     child: Text(
