@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:vigila/screens/authenticate/authenticate.dart';
 import 'package:vigila/screens/home/home.dart';
 import 'package:vigila/models/user.dart';
+import 'package:vigila/screens/splash/loginsplashscreen.dart';
+import 'package:vigila/screens/splash/registersplashscreen.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -13,7 +15,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return MyNavigationBar();
+      return RegisterSplashScreen();
     }
   }
 }
