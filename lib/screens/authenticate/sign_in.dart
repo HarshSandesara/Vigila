@@ -6,7 +6,8 @@ import 'package:vigila/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  final Function toggleNewUser;
+  SignIn({this.toggleView, this.toggleNewUser});
 
   @override
   _SignInState createState() => _SignInState();
@@ -37,6 +38,7 @@ class _SignInState extends State<SignIn> {
                       Text('Register', style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     widget.toggleView();
+                    widget.toggleNewUser();
                   },
                 ),
               ],

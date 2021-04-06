@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vigila/screens/home/home.dart';
@@ -17,21 +16,16 @@ class _LoginSplashScreen extends State<LoginSplashScreen> {
     super.initState();
     Timer(
         Duration(seconds: 5),
-        () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MyNavigationBar(),
-              ),
-            ));
+        () => Navigator.of(context).pop());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Vigila'),
-          backgroundColor: Colors.purple[700],
-          ),
+      // appBar: AppBar(
+      //     title: const Text('Vigila'),
+      //     backgroundColor: Colors.purple[700],
+      //     ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[

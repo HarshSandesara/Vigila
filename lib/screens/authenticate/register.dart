@@ -7,7 +7,8 @@ import 'package:dropdown_formfield/dropdown_formfield.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
-  Register({this.toggleView});
+  final Function toggleNewUser;
+  Register({this.toggleView, this.toggleNewUser});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -27,42 +28,6 @@ class _RegisterState extends State<Register> {
   String confirmPassword = '';
   String error = '';
   String bloodGroup = '';
-  // String _currentSelectedValue = '';
-  // var _bloodGroups = [
-  //   {
-  //     "display": "A+",
-  //     "value": "A+",
-  //   },
-  //   {
-  //     "display": "A-",
-  //     "value": "A-",
-  //   },
-  //   {
-  //     "display": "B+",
-  //     "value": "B+",
-  //   },
-  //   {
-  //     "display": "B-",
-  //     "value": "B-",
-  //   },
-  //   {
-  //     "display": "O+",
-  //     "value": "O+",
-  //   },
-  //   {
-  //     "display": "O-",
-  //     "value": "O-",
-  //   },
-  //   {
-  //     "display": "AB+",
-  //     "value": "AB+",
-  //   },
-  //   {
-  //     "display": "AB-",
-  //     "value": "AB-",
-  //   },
-  // ];
-  // var _bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +43,7 @@ class _RegisterState extends State<Register> {
                   label: Text('Sign In', style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     widget.toggleView();
+                    widget.toggleNewUser();
                   },
                 ),
               ],

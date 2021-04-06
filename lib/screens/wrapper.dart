@@ -4,8 +4,8 @@ import 'package:vigila/main.dart';
 import 'package:vigila/screens/authenticate/authenticate.dart';
 import 'package:vigila/models/user.dart';
 import 'package:vigila/screens/home/home.dart';
-import 'package:vigila/screens/home/login_splash_screen.dart';
-import 'package:vigila/screens/home/register_splash_screen.dart';
+import 'package:vigila/screens/splash/loginsplashscreen.dart';
+import 'package:vigila/screens/splash/registersplashscreen.dart';
 
 class Wrapper extends StatefulWidget {
   @override
@@ -23,15 +23,24 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<CustomUser>(context);
     // return either Home or Authenticate widget
     if (user == null) {
-      return Authenticate();
-        // toggleNewUser: toggleNewUser);
+      return Authenticate(toggleNewUser: toggleNewUser);
     } else {
-      // if (!newUser) {
-      //   return LoginSplashScreen();
-      // } else {
-      //   return RegisterSplashScreen();
-      // }
-      return MyNavigationBar();
+      if (!newUser) {
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context, MaterialPageRoute(
+                builder: (context) => LoginSplashScreen(),
+              ));
+        });
+        return MyNavigationBar();
+      } else {
+        Future.delayed(Duration.zero, () {
+          Navigator.push(context, MaterialPageRoute(
+                builder: (context) => RegisterSplashScreen(),
+              ));
+        });
+        return MyNavigationBar();
+      }
+      // return MyNavigationBar();
     }
   }
 }
