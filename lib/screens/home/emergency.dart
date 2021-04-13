@@ -55,7 +55,7 @@ class _EmergencyState extends State<Emergency> {
   }
 
   Future<String> createAlertDialog(
-      BuildContext context, String name, String email, String phoneNumber) {
+      BuildContext context, String name, String phoneNumber) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -81,7 +81,7 @@ class _EmergencyState extends State<Emergency> {
                         MaterialPageRoute(
                           builder: (context) => EditContact(
                               name: name,
-                              email: email,
+                              // email: email,
                               phoneNumber: phoneNumber),
                         ),
                       );
@@ -138,7 +138,6 @@ class _EmergencyState extends State<Emergency> {
                               createAlertDialog(
                                   context,
                                   _emergencyContacts[index].name,
-                                  "sandesara.harsh@gmail.com",
                                   _emergencyContacts[index].contactNumber);
                             },
                           ),
@@ -169,3 +168,6 @@ class _EmergencyState extends State<Emergency> {
           );
   }
 }
+
+
+

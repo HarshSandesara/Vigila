@@ -21,6 +21,7 @@ public final class GeneratedPluginRegistrant {
     flutterEngine.getPlugins().add(new io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin());
     flutterEngine.getPlugins().add(new com.baseflow.geolocator.GeolocatorPlugin());
       com.babariviere.sms.SmsPlugin.registerWith(shimPluginRegistry.registrarFor("com.babariviere.sms.SmsPlugin"));
+    flutterEngine.getPlugins().add(new io.flutter.plugins.urllauncher.UrlLauncherPlugin());
     flutterEngine.getPlugins().add(new be.tramckrijte.workmanager.WorkmanagerPlugin());
   }
 }

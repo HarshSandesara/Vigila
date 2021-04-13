@@ -16,7 +16,6 @@ class AddContact extends StatefulWidget {
 
 class AddContactScreen extends State<AddContact> {
   String _name;
-  String _email;
   String _phoneNumber;
   final _firestoreInstance = FirebaseFirestore.instance;
   User user = FirebaseAuth.instance.currentUser;
@@ -31,7 +30,6 @@ class AddContactScreen extends State<AddContact> {
     FocusNode node = new FocusNode();
     return TextFormField(
       focusNode: node,
-      // maxLength: 50,
       decoration: InputDecoration(
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(
@@ -51,40 +49,6 @@ class AddContactScreen extends State<AddContact> {
       },
       onSaved: (String value) {
         _name = value;
-      },
-    );
-  }
-
-  Widget _buildEmail() {
-    FocusNode node = new FocusNode();
-    return TextFormField(
-      focusNode: node,
-      decoration: InputDecoration(
-          labelText: 'Email',
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.black54),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.purple.shade400),
-          ),
-          labelStyle: TextStyle(
-              color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
-      keyboardType: TextInputType.emailAddress,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Email is required';
-        }
-
-        if (!RegExp(
-                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-            .hasMatch(value)) {
-          return 'Please enter a valid email Address';
-        }
-
-        return null;
-      },
-      onSaved: (String value) {
-        _email = value;
       },
     );
   }
@@ -132,7 +96,6 @@ class AddContactScreen extends State<AddContact> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 _buildName(),
-                _buildEmail(),
                 _buildPhoneNumber(),
                 SizedBox(height: 50),
                 Center(
