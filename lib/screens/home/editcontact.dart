@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vigila/models/user.dart';
-import 'package:vigila/screens/home/emergency.dart';
-import 'package:vigila/services/auth.dart';
-import 'package:vigila/shared/constants.dart';
-import 'package:vigila/shared/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
