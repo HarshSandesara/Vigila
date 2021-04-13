@@ -114,7 +114,7 @@ class EditContactScreen extends State<EditContact> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Save Changes',
+                        'Save Ch  anges',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       color: Colors.purple.shade400,
