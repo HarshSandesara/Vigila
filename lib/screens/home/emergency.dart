@@ -55,6 +55,17 @@ class _EmergencyState extends State<Emergency> {
     );
   }
 
+  _refresh() {
+    _getEmergencyContacts().then(
+      (val) => setState(
+        () {
+          _emergencyContacts = val;
+          loading = false;
+        },
+      ),
+    );
+  }
+
   Future<String> createAlertDialog(
       BuildContext context, String name, String phoneNumber) async {
     final _firestoreInstance = FirebaseFirestore.instance;
@@ -95,7 +106,7 @@ class _EmergencyState extends State<Emergency> {
                               id: docRef.docs[0].id,
                               phoneNumber: phoneNumber),
                         ),
-                      );
+                      ).then((_)=>_refresh());
                     }),
                 MaterialButton(
                     elevation: 5,
@@ -155,7 +166,7 @@ class _EmergencyState extends State<Emergency> {
                               createAlertDialog(
                                   context,
                                   _emergencyContacts[index].name,
-                                  _emergencyContacts[index].contactNumber);
+                                  _emergencyContacts[index].contactNumber).then((_)=>_refresh());
                             },
                           ),
                         );
@@ -170,7 +181,7 @@ class _EmergencyState extends State<Emergency> {
                             MaterialPageRoute(
                               builder: (context) => AddContact(),
                             ),
-                          );
+                          ).then((_)=>_refresh());
                         },
                         child: Text('Add Contact'),
                         color: Colors.purple.shade400,
