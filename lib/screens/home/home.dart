@@ -67,6 +67,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
+    // Options available to user on entering the application
     Guidelines(),
     EmergencyButton(),
     Profile(),
@@ -85,6 +86,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       value: DatabaseService().users,
       child: Scaffold(
         appBar: AppBar(
+          // App title
             title: const Text('Vigila'),
             backgroundColor: Colors.purple[700],
             actions: <Widget>[
@@ -98,6 +100,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         body: Center(child: _widgetOptions.elementAt(focusedPage)),
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
+              // User navigable tabs
               BottomNavigationBarItem(
                 icon: Icon(Icons.book),
                 label: 'Guidelines',

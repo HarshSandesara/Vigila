@@ -5,11 +5,13 @@ class Guidelines extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Code to change overflow scroll colour
       body: GlowingOverscrollColorChanger(
         color: Colors.purple[600],
         child: ListView(
           children: <Widget>[
             ListTile(
+              // List of options available to user
               leading: Icon(Icons.add_alert),
               title: Text('First Aid'),
               onTap: () {
@@ -47,12 +49,12 @@ class Guidelines extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.list_alt),
-              title: Text('BLS'),
+              title: Text('Helpline Numbers'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CPR(),
+                    builder: (context) => HelpLineNumbers('', ''),
                   ),
                 );
               },
@@ -66,6 +68,7 @@ class Guidelines extends StatelessWidget {
 
 /// Overrides the [GlowingOverscrollIndicator] color used by descendant widgets.
 class GlowingOverscrollColorChanger extends StatelessWidget {
+  // Change colour of overflow scroll glow
   final Widget child;
   final Color color;
 

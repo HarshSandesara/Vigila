@@ -9,6 +9,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  // Screen to display user profile
   String name, blood_type, address, phone_number;
   User user = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
@@ -41,6 +42,7 @@ class _ProfileState extends State<Profile> {
               : data['contact_number'].toString();
 
           return SafeArea(
+            // Profile details
             child: Column(
               children: [
                 Container(

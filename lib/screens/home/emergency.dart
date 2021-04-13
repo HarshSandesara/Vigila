@@ -55,6 +55,7 @@ class _EmergencyState extends State<Emergency> {
   }
 
   Future<String> createAlertDialog(
+    // Create popup on clicking contact
       BuildContext context, String name, String email, String phoneNumber) {
     return showDialog(
         context: context,
@@ -64,6 +65,7 @@ class _EmergencyState extends State<Emergency> {
                 "What do you want to do with $name?",
                 style: TextStyle(fontSize: 15),
               ),
+              // Call/Edit/Delete contact/ Cancel
               actions: <Widget>[
                 MaterialButton(
                     elevation: 5,
@@ -112,6 +114,7 @@ class _EmergencyState extends State<Emergency> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
+                      // Show emergency contact list
                       "Your Emergency Contact List",
                       style: TextStyle(
                           fontSize: 20,
@@ -156,6 +159,7 @@ class _EmergencyState extends State<Emergency> {
                             ),
                           );
                         },
+                        // Option to add contact
                         child: Text('Add Contact'),
                         color: Colors.purple.shade400,
                         textColor: Colors.white,

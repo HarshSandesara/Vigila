@@ -8,11 +8,12 @@ class LoginSplashScreen extends StatefulWidget {
 }
 
 class _LoginSplashScreen extends State<LoginSplashScreen> {
+  // Splash screen to prompt users to update information and read guidelines
   @override
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 5),
+        Duration(seconds: 1),
         () => Navigator.of(context).pop());
   }
 

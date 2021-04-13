@@ -33,6 +33,7 @@ class AddContactScreen extends State<AddContact> {
       focusNode: node,
       // maxLength: 50,
       decoration: InputDecoration(
+          // Add name
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -43,6 +44,7 @@ class AddContactScreen extends State<AddContact> {
           labelStyle: TextStyle(
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       validator: (String value) {
+        // Name validator
         if (value.isEmpty) {
           return 'Name is required';
         }
@@ -60,6 +62,7 @@ class AddContactScreen extends State<AddContact> {
     return TextFormField(
       focusNode: node,
       decoration: InputDecoration(
+        // Add email
           labelText: 'Email',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -71,6 +74,7 @@ class AddContactScreen extends State<AddContact> {
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       keyboardType: TextInputType.emailAddress,
       validator: (String value) {
+        // Email validator
         if (value.isEmpty) {
           return 'Email is required';
         }
@@ -94,6 +98,7 @@ class AddContactScreen extends State<AddContact> {
     return TextFormField(
       focusNode: node,
       decoration: InputDecoration(
+        // Add phone number
           labelText: 'Phone Number',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -105,6 +110,7 @@ class AddContactScreen extends State<AddContact> {
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       keyboardType: TextInputType.phone,
       validator: (String value) {
+        // Phone number validator
         if (value.isEmpty) {
           return 'Phone number is required';
         }
@@ -121,6 +127,7 @@ class AddContactScreen extends State<AddContact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // Screen title
         title: Text("Add Contact"),
         backgroundColor: Colors.purple[700],
       ),

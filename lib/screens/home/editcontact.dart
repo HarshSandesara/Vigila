@@ -30,6 +30,7 @@ class EditContactScreen extends State<EditContact> {
       focusNode: node,
       // maxLength: 50,
       decoration: InputDecoration(
+        // Edit name
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -40,6 +41,7 @@ class EditContactScreen extends State<EditContact> {
           labelStyle: TextStyle(
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       validator: (String value) {
+        // Name validator
         if (value.isEmpty) {
           return 'Name is required';
         }
@@ -58,6 +60,7 @@ class EditContactScreen extends State<EditContact> {
       initialValue: email,
       focusNode: node,
       decoration: InputDecoration(
+        // Edit email
           labelText: 'Email',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -69,6 +72,7 @@ class EditContactScreen extends State<EditContact> {
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       keyboardType: TextInputType.emailAddress,
       validator: (String value) {
+        // Email validator
         if (value.isEmpty) {
           return 'Email is required';
         }
@@ -93,6 +97,7 @@ class EditContactScreen extends State<EditContact> {
       initialValue: phoneNumber,
       focusNode: node,
       decoration: InputDecoration(
+        // Enter phone number
           labelText: 'Phone Number',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -104,6 +109,7 @@ class EditContactScreen extends State<EditContact> {
               color: node.hasFocus ? Colors.black87 : Colors.purple.shade400)),
       keyboardType: TextInputType.phone,
       validator: (String value) {
+        // Phone number validator
         if (value.isEmpty) {
           return 'Phone number is required';
         }
@@ -120,6 +126,7 @@ class EditContactScreen extends State<EditContact> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // Screen title
         title: Text("Edit Contact"),
         backgroundColor: Colors.purple[700],
       ),
@@ -146,6 +153,7 @@ class EditContactScreen extends State<EditContact> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
+                        // Save changes
                         'Save Changes',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
@@ -157,6 +165,7 @@ class EditContactScreen extends State<EditContact> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
+                        // Cancel/Reset changes
                         'Cancel',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
