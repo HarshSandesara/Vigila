@@ -6,6 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:after_layout/after_layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vigila/screens/home/introloginconnector.dart';
+import 'package:vigila/shared/loading.dart';
 
 Future<void> requestPermission() async {
   bool serviceEnabled;
@@ -35,7 +39,7 @@ Future<void> requestPermission() async {
 void getLocation() async {
   await Firebase.initializeApp();
 
-  Position position = await Geolocator.getCurrentPosition(
+  Position position = await Geolocator. getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best);
   print(position);
   if (FirebaseAuth.instance.currentUser != null) {
@@ -60,79 +64,44 @@ void main() async {
 
   final int helloAlarmID = 0;
   await AndroidAlarmManager.periodic(
-      const Duration(seconds: 5), helloAlarmID, getLocation);
+      const Duration(seconds: 60), helloAlarmID, getLocation);
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return MaterialApp(home: MainPage());
-    return MaterialApp(home: MainPage());
+    return MaterialApp(home: new IntroScreen());
   }
 }
 
-// Fetching and writing geopoints to firestore...
+class IntroScreen extends StatefulWidget {
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
 
-/*
-  Position _currentPosition;
-  _getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+class _IntroScreenState extends State<IntroScreen> with AfterLayoutMixin<IntroScreen> {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Location services are disabled.');
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new IntroLoginConnector()));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new MainPage()));
     }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      print(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return print(
-            'Location permissions are denied (actual value: $permission).');
-      }
-    }
-
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      _currentPosition = position;
-    });
   }
 
-  final geo = Geoflutterfire();
-  final _firestore = FirebaseFirestore.instance;
-  GeoFirePoint myLocation = geo.point(latitude: 19.228653, longitude: 72.855852);
+  @override
+  void afterFirstLayout(BuildContext context) => checkFirstSeen();
 
-  _firestore
-      .collection('users')
-      .doc('RcfbEJV3ghe3i2z737GJQjhvm9d2')
-      .update({'position': myLocation.data});
-
-  // Create a geoFirePoint
-  // MALAD : latitude: 19.187306, longitude: 72.848357
-  // BORIVALI: latitude: 19.229239, longitude: 72.840989
-  await _getCurrentLocation();
-  GeoFirePoint center = geo.point(latitude: _currentPosition.latitude, longitude: _currentPosition.longitude);
-
-  var collectionReference = _firestore.collection('users');
-
-  double radius = 0.1;
-  String field = 'position';
-
-  Stream<List<DocumentSnapshot>> stream = geo
-      .collection(collectionRef: collectionReference)
-      .within(center: center, radius: radius, field: field);
-
-  stream.listen((List<DocumentSnapshot> documentList) {
-    documentList.forEach((DocumentSnapshot document) {
-      print(document.data());
-    });
-  });
-
-*/
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new Loading(),
+    );
+  }
+}

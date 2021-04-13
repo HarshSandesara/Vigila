@@ -83,7 +83,6 @@ class _EmergencyState extends State<Emergency> {
                         MaterialPageRoute(
                           builder: (context) => EditContact(
                               name: name,
-                              // email: email,
                               phoneNumber: phoneNumber),
                         ),
                       );
