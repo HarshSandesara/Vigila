@@ -12,6 +12,7 @@ import 'package:vigila/screens/home/introloginconnector.dart';
 import 'package:vigila/shared/loading.dart';
 
 Future<void> requestPermission() async {
+  // Requests for location permissions from the user
   bool serviceEnabled;
   LocationPermission permission;
 
@@ -37,6 +38,7 @@ Future<void> requestPermission() async {
 }
 
 void getLocation() async {
+  // Fetches the current location of the user and updates it in the database
   await Firebase.initializeApp();
 
   Position position = await Geolocator.getCurrentPosition(
@@ -63,6 +65,7 @@ void main() async {
   runApp(MyApp());
 
   final int helloAlarmID = 0;
+  // Fetches location every minute
   await AndroidAlarmManager.periodic(
       const Duration(seconds: 60), helloAlarmID, getLocation);
 }
@@ -74,6 +77,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+// This class is used to display the intro screen only once
 class IntroScreen extends StatefulWidget {
   @override
   _IntroScreenState createState() => _IntroScreenState();

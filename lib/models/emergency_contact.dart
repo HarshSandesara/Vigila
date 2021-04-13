@@ -8,16 +8,10 @@ class EmergencyContact {
   EmergencyContact({this.name, this.contactNumber});
 
   Future<void> sendSMS(Position currentPosition) async {
+    // Sends SMS with the current position to users
     SmsSender sender = SmsSender();
     SmsMessage message = SmsMessage(contactNumber,
         'Please come and rescue me! I am at the location: maps.google.com/?ll=${currentPosition.latitude},${currentPosition.longitude}');
-    // message.onStateChanged.listen((state) {
-    //   if (state == SmsMessageState.Sent) {
-    //     print("SMS is sent!");
-    //   } else if (state == SmsMessageState.Delivered) {
-    //     print("SMS is delivered!");
-    //   }
-    // });
     await sender.sendSms(message);
   }
 }

@@ -32,6 +32,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
 
   int focusedPage = 1;
   static List<Widget> _widgetOptions = <Widget>[
+    // Options available to user on entering the application
     Guidelines(),
     EmergencyButton(),
     Profile(),
@@ -50,6 +51,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       value: DatabaseService().users,
       child: Scaffold(
         appBar: AppBar(
+          // App title
             title: const Text('Vigila'),
             backgroundColor: Colors.purple[700],
             actions: <Widget>[
@@ -63,6 +65,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
         body: Center(child: _widgetOptions.elementAt(focusedPage)),
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
+              // User navigable tabs
               BottomNavigationBarItem(
                 icon: Icon(Icons.book),
                 label: 'Guidelines',
@@ -104,12 +107,12 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   final AuthService _auth = AuthService();
   final firestoreInstance = FirebaseFirestore.instance;
 
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
   
   _getCurrentLocation() async {
+    /// Determine the current position of the device.
+    ///
+    /// When the location services are not enabled or permissions
+    /// are denied the `Future` will return an error.
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -141,8 +144,8 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     });
   }
 
-  // This function shows the Location of the user as a snackbar
   void showSnackbar(BuildContext context) async {
+    // This function intimates the user after SOS button is clicked
     await _getCurrentLocation();
     if (_currentPosition != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
@@ -179,6 +182,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getUsersInRadius() async {
+    // Get user in 100 meter radius using GeoFlutterFire 
     final geo = Geoflutterfire();
     final _firestore = FirebaseFirestore.instance;
     var collectionReference = _firestore.collection('users');
@@ -219,6 +223,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 style: TextStyle(fontSize: 24),
               ),
               onPressed: () async {
+                // On button press call all the functions
                 showSnackbar(context);
                 await _getCurrentLocation();
                 _getEmergencyContacts(_currentPosition);

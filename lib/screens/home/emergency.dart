@@ -55,7 +55,19 @@ class _EmergencyState extends State<Emergency> {
     );
   }
 
+  _refresh() {
+    _getEmergencyContacts().then(
+      (val) => setState(
+        () {
+          _emergencyContacts = val;
+          loading = false;
+        },
+      ),
+    );
+  }
+
   Future<String> createAlertDialog(
+    // Create popup on clicking contact
       BuildContext context, String name, String phoneNumber) async {
     final _firestoreInstance = FirebaseFirestore.instance;
     User user = FirebaseAuth.instance.currentUser;
@@ -74,6 +86,7 @@ class _EmergencyState extends State<Emergency> {
                 "What do you want to do with $name?",
                 style: TextStyle(fontSize: 15),
               ),
+              // Call/Edit/Delete contact/ Cancel
               actions: <Widget>[
                 MaterialButton(
                     elevation: 5,
@@ -95,7 +108,7 @@ class _EmergencyState extends State<Emergency> {
                               id: docRef.docs[0].id,
                               phoneNumber: phoneNumber),
                         ),
-                      );
+                      ).then((_)=>_refresh());
                     }),
                 MaterialButton(
                     elevation: 5,
@@ -129,6 +142,7 @@ class _EmergencyState extends State<Emergency> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
+                      // Show emergency contact list
                       "Your Emergency Contact List",
                       style: TextStyle(
                           fontSize: 20,
@@ -155,7 +169,7 @@ class _EmergencyState extends State<Emergency> {
                               createAlertDialog(
                                   context,
                                   _emergencyContacts[index].name,
-                                  _emergencyContacts[index].contactNumber);
+                                  _emergencyContacts[index].contactNumber).then((_)=>_refresh());
                             },
                           ),
                         );
@@ -170,8 +184,9 @@ class _EmergencyState extends State<Emergency> {
                             MaterialPageRoute(
                               builder: (context) => AddContact(),
                             ),
-                          );
+                          ).then((_)=>_refresh());
                         },
+                        // Option to add contact
                         child: Text('Add Contact'),
                         color: Colors.purple.shade400,
                         textColor: Colors.white,
