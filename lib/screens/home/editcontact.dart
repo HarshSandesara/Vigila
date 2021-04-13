@@ -8,21 +8,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class EditContact extends StatefulWidget {
-  final String name, phoneNumber;
-  EditContact({Key key, @required this.name, this.phoneNumber}) : super(key: key);
+  final String name, phoneNumber, id;
+  EditContact({Key key, @required this.name, this.id, this.phoneNumber}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return EditContactScreen(name: name, phoneNumber: phoneNumber);
+    return EditContactScreen(name: name, id:id, phoneNumber: phoneNumber);
   }
 }
 
 class EditContactScreen extends State<EditContact> {
-  final String name, phoneNumber;
+  final String name, phoneNumber, id;
   final _firestoreInstance = FirebaseFirestore.instance;
   User user = FirebaseAuth.instance.currentUser;
   String _name;
   String _phoneNumber;
-  EditContactScreen({Key key, @required this.name, this.phoneNumber});
+  EditContactScreen({Key key, @required this.name, this.id, this.phoneNumber});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -110,6 +110,12 @@ class EditContactScreen extends State<EditContact> {
                           return;
                         }
                         _formKey.currentState.save();
+                        _firestoreInstance
+                          .collection("users")
+                          .doc(user.uid)
+                          .collection("emergency_contacts")
+                          .doc(id)
+                          .update({"contact_number": _phoneNumber, "name": _name});
                         Navigator.of(context).pop();
                       },
                       child: Text(

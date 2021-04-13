@@ -55,7 +55,16 @@ class _EmergencyState extends State<Emergency> {
   }
 
   Future<String> createAlertDialog(
-      BuildContext context, String name, String phoneNumber) {
+      BuildContext context, String name, String phoneNumber) async {
+    final _firestoreInstance = FirebaseFirestore.instance;
+    User user = FirebaseAuth.instance.currentUser;
+    QuerySnapshot docRef = await _firestoreInstance
+        .collection("users")
+        .doc(user.uid)
+        .collection("emergency_contacts")
+        .where('contact_number', isEqualTo: phoneNumber)
+        .get();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -81,7 +90,7 @@ class _EmergencyState extends State<Emergency> {
                         MaterialPageRoute(
                           builder: (context) => EditContact(
                               name: name,
-                              // email: email,
+                              id: docRef.docs[0].id,
                               phoneNumber: phoneNumber),
                         ),
                       );
@@ -90,6 +99,12 @@ class _EmergencyState extends State<Emergency> {
                     elevation: 5,
                     child: Text('Delete'),
                     onPressed: () {
+                      _firestoreInstance
+                          .collection("users")
+                          .doc(user.uid)
+                          .collection("emergency_contacts")
+                          .doc(docRef.docs[0].id)
+                          .delete();
                       Navigator.of(context).pop();
                     })
               ]);
@@ -168,6 +183,3 @@ class _EmergencyState extends State<Emergency> {
           );
   }
 }
-
-
-
