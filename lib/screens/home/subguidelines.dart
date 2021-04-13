@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:vigila/services/auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FirstAid extends StatelessWidget {
   // First Aid Guidelines
@@ -361,7 +360,7 @@ class HelpLineNumbers extends StatelessWidget {
                   ),
                   trailing: Icon(Icons.call),
                   onTap: () {
-                    
+                      launch("tel://" + _helpLineNumbers[index].contactNumber);
                   },
                 ),
               );
@@ -381,9 +380,9 @@ final List<HelpLineNumbers> _helpLineNumbers = <HelpLineNumbers>[
   HelpLineNumbers('Disaster Management Services', '108'),
   HelpLineNumbers('Women Helpline', '1091'),
   HelpLineNumbers('Women Helpline-Domestic Abuse', '181'),
-  HelpLineNumbers('Senior Citizen Helpline', '1091, 1291'),
+  HelpLineNumbers('Senior Citizen Helpline', '1291'),
   HelpLineNumbers('Road Accident Emergency Service', '1073'),
   HelpLineNumbers('Children In Difficult Situation', '1098'),
-  HelpLineNumbers('AIIMS Poison Control Centre', '011-26593677, 26589391, 26583282'),
+  HelpLineNumbers('AIIMS Poison Control Centre', '011-26593677'),
   HelpLineNumbers('LPG Gelpline', '1906'),
 ];
