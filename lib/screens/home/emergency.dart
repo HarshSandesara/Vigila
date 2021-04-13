@@ -5,6 +5,7 @@ import 'package:vigila/models/emergency_contact.dart';
 import 'package:vigila/shared/loading.dart';
 import 'package:vigila/screens/home/addcontact.dart';
 import 'package:vigila/screens/home/editcontact.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Emergency extends StatefulWidget {
   @override
@@ -54,9 +55,29 @@ class _EmergencyState extends State<Emergency> {
     );
   }
 
+  _refresh() {
+    _getEmergencyContacts().then(
+      (val) => setState(
+        () {
+          _emergencyContacts = val;
+          loading = false;
+        },
+      ),
+    );
+  }
+
   Future<String> createAlertDialog(
     // Create popup on clicking contact
-      BuildContext context, String name, String email, String phoneNumber) {
+      BuildContext context, String name, String phoneNumber) async {
+    final _firestoreInstance = FirebaseFirestore.instance;
+    User user = FirebaseAuth.instance.currentUser;
+    QuerySnapshot docRef = await _firestoreInstance
+        .collection("users")
+        .doc(user.uid)
+        .collection("emergency_contacts")
+        .where('contact_number', isEqualTo: phoneNumber)
+        .get();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -71,6 +92,7 @@ class _EmergencyState extends State<Emergency> {
                     elevation: 5,
                     child: Text('Call'),
                     onPressed: () {
+                      launch("tel://" + phoneNumber);
                       Navigator.of(context).pop();
                     }),
                 MaterialButton(
@@ -83,15 +105,21 @@ class _EmergencyState extends State<Emergency> {
                         MaterialPageRoute(
                           builder: (context) => EditContact(
                               name: name,
-                              email: email,
+                              id: docRef.docs[0].id,
                               phoneNumber: phoneNumber),
                         ),
-                      );
+                      ).then((_)=>_refresh());
                     }),
                 MaterialButton(
                     elevation: 5,
                     child: Text('Delete'),
                     onPressed: () {
+                      _firestoreInstance
+                          .collection("users")
+                          .doc(user.uid)
+                          .collection("emergency_contacts")
+                          .doc(docRef.docs[0].id)
+                          .delete();
                       Navigator.of(context).pop();
                     })
               ]);
@@ -141,8 +169,7 @@ class _EmergencyState extends State<Emergency> {
                               createAlertDialog(
                                   context,
                                   _emergencyContacts[index].name,
-                                  "sandesara.harsh@gmail.com",
-                                  _emergencyContacts[index].contactNumber);
+                                  _emergencyContacts[index].contactNumber).then((_)=>_refresh());
                             },
                           ),
                         );
@@ -157,7 +184,7 @@ class _EmergencyState extends State<Emergency> {
                             MaterialPageRoute(
                               builder: (context) => AddContact(),
                             ),
-                          );
+                          ).then((_)=>_refresh());
                         },
                         // Option to add contact
                         child: Text('Add Contact'),

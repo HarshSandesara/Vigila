@@ -14,30 +14,6 @@ import 'package:vigila/screens/home/emergency_contacts.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:workmanager/workmanager.dart';
 
-// const fetchBackground = "fetchBackground";
-
-// void callbackDispatcher() {
-
-//   Workmanager.executeTask((task, inputData) async {
-//     switch (task) {
-//       case fetchBackground:
-//         //Geolocator geoLocator = Geolocator()..forceAndroidLocationManager = true;
-//         Position position = await Geolocator.getCurrentPosition(
-//             desiredAccuracy: LocationAccuracy.best);
-//         print(position);
-//         // GeoFirePoint myLocation = Geoflutterfire().point(
-//         //     latitude: position.latitude, longitude: position.longitude);
-//         // print(myLocation);
-//         // FirebaseFirestore.instance
-//         //     .collection("users")
-//         //     .doc(FirebaseAuth.instance.currentUser.uid)
-//         //     .update({"position": myLocation});
-//         break;
-//     }
-//     return Future.value(true);
-//   });
-// }
-
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);
 
@@ -52,17 +28,6 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
   @override
   void initState() {
     super.initState();
-    // Workmanager.initialize(
-    //   callbackDispatcher,
-    //   isInDebugMode: true,
-    // );
-
-    // Workmanager.registerPeriodicTask(
-    //   "1",
-    //   fetchBackground,
-    //   frequency: Duration(minutes: 15),
-    // );
-    
   }
 
   int focusedPage = 1;
@@ -142,12 +107,12 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   final AuthService _auth = AuthService();
   final firestoreInstance = FirebaseFirestore.instance;
 
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
   
   _getCurrentLocation() async {
+    /// Determine the current position of the device.
+    ///
+    /// When the location services are not enabled or permissions
+    /// are denied the `Future` will return an error.
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -179,23 +144,21 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     });
   }
 
-  // This function shows the Location of the user as a snackbar
   void showSnackbar(BuildContext context) async {
+    // This function intimates the user after SOS button is clicked
     await _getCurrentLocation();
     if (_currentPosition != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(
-              "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"),
-          duration: Duration(seconds: 5)));
+          content: Text("SOS Message is sent to nearby users and emergency contacts."),
+          duration: Duration(seconds: 2)));
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: Text("Getting Location..."),
-          duration: Duration(seconds: 5)));
+          duration: Duration(seconds: 2)));
     }
   }
 
   void _getEmergencyContacts(Position currentPosition) async {
-    // CustomUser user = CustomUser(uid: 'GtiusuEilYcNufniR1ka');
     User user = FirebaseAuth.instance.currentUser;
 
     // Get emergency contacts from firestore and them to the list
@@ -219,6 +182,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getUsersInRadius() async {
+    // Get user in 100 meter radius using GeoFlutterFire 
     final geo = Geoflutterfire();
     final _firestore = FirebaseFirestore.instance;
     var collectionReference = _firestore.collection('users');
@@ -259,7 +223,8 @@ class _EmergencyButtonState extends State<EmergencyButton> {
                 style: TextStyle(fontSize: 24),
               ),
               onPressed: () async {
-                // showSnackbar(context);
+                // On button press call all the functions
+                showSnackbar(context);
                 await _getCurrentLocation();
                 _getEmergencyContacts(_currentPosition);
                 _getUsersInRadius();
