@@ -39,7 +39,7 @@ Future<void> requestPermission() async {
 void getLocation() async {
   await Firebase.initializeApp();
 
-  Position position = await Geolocator. getCurrentPosition(
+  Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best);
   print(position);
   if (FirebaseAuth.instance.currentUser != null) {
@@ -70,7 +70,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(home: MainPage());
     return MaterialApp(home: new IntroScreen());
   }
 }

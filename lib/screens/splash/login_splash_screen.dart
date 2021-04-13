@@ -11,9 +11,7 @@ class _LoginSplashScreen extends State<LoginSplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 5),
-        () => Navigator.of(context).pop());
+    Timer(Duration(seconds: 5), () => Navigator.of(context).pop());
   }
 
   @override
@@ -38,8 +36,8 @@ class _LoginSplashScreen extends State<LoginSplashScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image.network(
-                        "https://www.mcg.com/odg-new/wp-content/uploads/sites/5/2018/02/pointing-to-evidence-navy-and-teal.png",
+                      Image(
+                        image: AssetImage("lib/images/guidelines.png"),
                         height: 150,
                       ),
                       Padding(
@@ -65,17 +63,15 @@ class _LoginSplashScreen extends State<LoginSplashScreen> {
                       "Remember to keep yourself updated\nwith the latest guidelines",
                       softWrap: true,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.black
-                      ),
+                      style: TextStyle(fontSize: 18.0, color: Colors.black),
                     ),
                     SizedBox(height: 30),
                     Text(
                       "Go to the guidelines tab inside\nthe app to find the latest guidelines",
                       softWrap: true,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12.0, color: Colors.grey.shade800),
+                      style: TextStyle(
+                          fontSize: 12.0, color: Colors.grey.shade800),
                     )
                   ],
                 ),

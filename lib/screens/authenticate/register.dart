@@ -3,7 +3,6 @@ import 'package:vigila/models/user.dart';
 import 'package:vigila/services/auth.dart';
 import 'package:vigila/shared/constants.dart';
 import 'package:vigila/shared/loading.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -57,8 +56,8 @@ class _RegisterState extends State<Register> {
                     children: <Widget>[
                       SizedBox(height: 20.0),
                       TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'First Name'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: 'First Name'),
                         validator: (val) =>
                             val.isEmpty ? "Enter your first name" : null,
                         onChanged: (val) {
@@ -108,7 +107,7 @@ class _RegisterState extends State<Register> {
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Blood Group'),
-                        validator: (val) => 
+                        validator: (val) =>
                             val.isEmpty ? "Enter your blood group" : null,
                         onChanged: (val) {
                           setState(() => bloodGroup = val);
@@ -154,8 +153,14 @@ class _RegisterState extends State<Register> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password, fname, lname, bloodGroup, contactNumber);
+                            dynamic result =
+                                await _auth.registerWithEmailAndPassword(
+                                    email,
+                                    password,
+                                    fname,
+                                    lname,
+                                    bloodGroup,
+                                    contactNumber);
                             if (!(result is CustomUser)) {
                               setState(() {
                                 error = result;

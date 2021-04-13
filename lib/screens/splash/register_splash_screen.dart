@@ -12,9 +12,7 @@ class _RegisterSplashScreen extends State<RegisterSplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 5),
-        () => Navigator.of(context).pop());
+    Timer(Duration(seconds: 5), () => Navigator.of(context).pop());
   }
 
   @override
@@ -25,7 +23,7 @@ class _RegisterSplashScreen extends State<RegisterSplashScreen> {
       //     backgroundColor: Colors.purple[700],
       //     ),
       body: FadeIn(
-              child: Stack(
+        child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Container(
@@ -40,8 +38,9 @@ class _RegisterSplashScreen extends State<RegisterSplashScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        Image.network(
-                          "https://image.flaticon.com/icons/png/512/504/504309.png",
+                        Image(
+                          image: AssetImage(
+                              "lib/images/register_splash_screen.png"),
                           height: 150,
                         ),
                         Padding(
