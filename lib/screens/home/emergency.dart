@@ -5,6 +5,7 @@ import 'package:vigila/models/emergency_contact.dart';
 import 'package:vigila/shared/loading.dart';
 import 'package:vigila/screens/home/addcontact.dart';
 import 'package:vigila/screens/home/editcontact.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Emergency extends StatefulWidget {
   @override
@@ -69,6 +70,7 @@ class _EmergencyState extends State<Emergency> {
                     elevation: 5,
                     child: Text('Call'),
                     onPressed: () {
+                      launch("tel://" + phoneNumber);
                       Navigator.of(context).pop();
                     }),
                 MaterialButton(
