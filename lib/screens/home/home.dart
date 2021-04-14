@@ -24,7 +24,6 @@ class MyNavigationBar extends StatefulWidget {
 class _MyNavigationBarState extends State<MyNavigationBar> {
   final AuthService _auth = AuthService();
 
-
   @override
   void initState() {
     super.initState();
@@ -51,7 +50,7 @@ class _MyNavigationBarState extends State<MyNavigationBar> {
       value: DatabaseService().users,
       child: Scaffold(
         appBar: AppBar(
-          // App title
+            // App title
             title: const Text('Vigila'),
             backgroundColor: Colors.purple[700],
             actions: <Widget>[
@@ -107,7 +106,6 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   final AuthService _auth = AuthService();
   final firestoreInstance = FirebaseFirestore.instance;
 
-  
   _getCurrentLocation() async {
     /// Determine the current position of the device.
     ///
@@ -149,8 +147,9 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     await _getCurrentLocation();
     if (_currentPosition != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text("SOS Message is sent to nearby users and emergency contacts."),
-          duration: Duration(seconds: 2)));
+          content: Text(
+              "Message sent. Vigila will continue to send your location periodically to responders. If you wish to stop sending these messages, remove Vigila from the background"),
+          duration: Duration(seconds: 3)));
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: Text("Getting Location..."),
@@ -182,7 +181,7 @@ class _EmergencyButtonState extends State<EmergencyButton> {
   }
 
   void _getUsersInRadius() async {
-    // Get user in 100 meter radius using GeoFlutterFire 
+    // Get user in 100 meter radius using GeoFlutterFire
     final geo = Geoflutterfire();
     final _firestore = FirebaseFirestore.instance;
     var collectionReference = _firestore.collection('users');
