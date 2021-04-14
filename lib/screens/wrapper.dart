@@ -26,20 +26,23 @@ class _WrapperState extends State<Wrapper> {
     } else {
       if (!newUser) {
         Future.delayed(Duration.zero, () {
-          Navigator.push(context, MaterialPageRoute(
+          Navigator.push(
+              context,
+              MaterialPageRoute(
                 builder: (context) => LoginSplashScreen(),
               ));
         });
         return MyNavigationBar();
       } else {
         Future.delayed(Duration.zero, () {
-          Navigator.push(context, MaterialPageRoute(
+          Navigator.push(
+              context,
+              MaterialPageRoute(
                 builder: (context) => RegisterSplashScreen(),
               ));
         });
         return MyNavigationBar();
       }
-      // return MyNavigationBar();
     }
   }
 }

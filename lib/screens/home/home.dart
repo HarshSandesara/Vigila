@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:vigila/services/auth.dart';
 import 'package:vigila/models/emergency_contact.dart';
-import 'package:vigila/models/user.dart';
 import 'package:vigila/screens/home/profile.dart';
 import 'package:vigila/screens/home/emergency.dart';
 import 'package:vigila/screens/home/guidelines.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vigila/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:vigila/screens/home/emergency_contacts.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:workmanager/workmanager.dart';
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar({Key key}) : super(key: key);

@@ -13,18 +13,12 @@ class _RegisterSplashScreen extends State<RegisterSplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 2),
-        () => Navigator.of(context).pop());
+    Timer(Duration(seconds: 2), () => Navigator.of(context).pop());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //     title: const Text('Vigila'),
-      //     backgroundColor: Colors.purple[700],
-      //     ),
       body: FadeIn(
         child: Stack(
           fit: StackFit.expand,

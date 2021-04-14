@@ -67,8 +67,10 @@ class _EmergencyState extends State<Emergency> {
   }
 
   Future<String> createAlertDialog(
-    // Create popup on clicking contact
-      BuildContext context, String name, String phoneNumber) async {
+      // Create popup on clicking contact
+      BuildContext context,
+      String name,
+      String phoneNumber) async {
     final _firestoreInstance = FirebaseFirestore.instance;
     User user = FirebaseAuth.instance.currentUser;
     QuerySnapshot docRef = await _firestoreInstance
@@ -108,7 +110,7 @@ class _EmergencyState extends State<Emergency> {
                               id: docRef.docs[0].id,
                               phoneNumber: phoneNumber),
                         ),
-                      ).then((_)=>_refresh());
+                      ).then((_) => _refresh());
                     }),
                 MaterialButton(
                     elevation: 5,
@@ -167,9 +169,10 @@ class _EmergencyState extends State<Emergency> {
                             trailing: Icon(Icons.call),
                             onTap: () {
                               createAlertDialog(
-                                  context,
-                                  _emergencyContacts[index].name,
-                                  _emergencyContacts[index].contactNumber).then((_)=>_refresh());
+                                      context,
+                                      _emergencyContacts[index].name,
+                                      _emergencyContacts[index].contactNumber)
+                                  .then((_) => _refresh());
                             },
                           ),
                         );
@@ -184,7 +187,7 @@ class _EmergencyState extends State<Emergency> {
                             MaterialPageRoute(
                               builder: (context) => AddContact(),
                             ),
-                          ).then((_)=>_refresh());
+                          ).then((_) => _refresh());
                         },
                         // Option to add contact
                         child: Text('Add Contact'),

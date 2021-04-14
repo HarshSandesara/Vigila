@@ -4,10 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class EditContact extends StatefulWidget {
   final String name, phoneNumber, id;
-  EditContact({Key key, @required this.name, this.id, this.phoneNumber}) : super(key: key);
+  EditContact({Key key, @required this.name, this.id, this.phoneNumber})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return EditContactScreen(name: name, id:id, phoneNumber: phoneNumber);
+    return EditContactScreen(name: name, id: id, phoneNumber: phoneNumber);
   }
 }
 
@@ -28,7 +29,7 @@ class EditContactScreen extends State<EditContact> {
       focusNode: node,
       // maxLength: 50,
       decoration: InputDecoration(
-        // Edit name
+          // Edit name
           labelText: 'Name',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -58,7 +59,7 @@ class EditContactScreen extends State<EditContact> {
       initialValue: phoneNumber,
       focusNode: node,
       decoration: InputDecoration(
-        // Enter phone number
+          // Enter phone number
           labelText: 'Phone Number',
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.black54),
@@ -111,11 +112,14 @@ class EditContactScreen extends State<EditContact> {
                         }
                         _formKey.currentState.save();
                         _firestoreInstance
-                          .collection("users")
-                          .doc(user.uid)
-                          .collection("emergency_contacts")
-                          .doc(id)
-                          .update({"contact_number": _phoneNumber, "name": _name});
+                            .collection("users")
+                            .doc(user.uid)
+                            .collection("emergency_contacts")
+                            .doc(id)
+                            .update({
+                          "contact_number": _phoneNumber,
+                          "name": _name
+                        });
                         Navigator.of(context).pop();
                       },
                       child: Text(

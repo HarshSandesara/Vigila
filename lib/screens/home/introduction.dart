@@ -12,7 +12,7 @@ class _MainPageState extends State<MainPage> {
   List<PageViewModel> getPages() {
     return [
       PageViewModel(
-        // Screen 1
+          // Screen 1
           title: "Welcome",
           body: "",
           image: Center(
@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
                 Image(image: AssetImage("lib/images/welcome.png"), height: 150),
           )),
       PageViewModel(
-        // Screen 2
+          // Screen 2
           title: "Everything to keep you safe, right here",
           body: "",
           image: Center(
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
                 image: AssetImage("lib/images/keep_you_safe.png"), height: 150),
           )),
       PageViewModel(
-        // Screen 3
+          // Screen 3
           title: "SOS Button",
           body: "Call anyone who can help",
           image: Center(
@@ -36,7 +36,7 @@ class _MainPageState extends State<MainPage> {
                 image: AssetImage("lib/images/sos_button.png"), height: 150),
           )),
       PageViewModel(
-        // Screen 4
+          // Screen 4
           title: "Emergency Contacts",
           body: "Inform people closest to you",
           image: Center(
@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
                 height: 150),
           )),
       PageViewModel(
-        // Screen 5
+          // Screen 5
           title: "First Aid Guidelines",
           body: "Provide Immediate Help to Victims",
           image: Center(
@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
                     image: AssetImage("lib/images/guidelines.jpg"))),
           ))),
       PageViewModel(
-        // Screen 6
+          // Screen 6
           title: "More features",
           body: "Let's Go!",
           image: Center(

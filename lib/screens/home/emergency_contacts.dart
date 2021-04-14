@@ -11,7 +11,6 @@ class _EmergencyContactsState extends State<EmergencyContacts> {
   @override
   Widget build(BuildContext context) {
     final users = Provider.of<QuerySnapshot>(context);
-    // print(users.docs);
     for (var doc in users.docs) {
       print(doc.data());
     }

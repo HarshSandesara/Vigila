@@ -77,21 +77,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 // This class is used to display the intro screen only once
 class IntroScreen extends StatefulWidget {
   @override
   _IntroScreenState createState() => _IntroScreenState();
 }
 
-class _IntroScreenState extends State<IntroScreen> with AfterLayoutMixin<IntroScreen> {
+class _IntroScreenState extends State<IntroScreen>
+    with AfterLayoutMixin<IntroScreen> {
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
     if (_seen) {
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new IntroLoginConnector()));
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          builder: (context) => new IntroLoginConnector()));
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(

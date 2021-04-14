@@ -22,7 +22,7 @@ class _RegisterState extends State<Register> {
   String fname = '';
   String lname = '';
   String email = '';
-  String contactNumber = '';  
+  String contactNumber = '';
   String password = '';
   String confirmPassword = '';
   String error = '';

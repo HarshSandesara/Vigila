@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:vigila/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Profile extends StatefulWidget {
@@ -35,8 +34,12 @@ class _ProfileState extends State<Profile> {
           // Fetch data from document snapshot
           Map<String, Object> data = docSnapshot.data.data();
           name = data['fname'].toString() + " " + data['lname'].toString();
-          blood_type = data['blood_type'] == null ? "???" : data['blood_type'].toString();
-          address = data['address'] == null ? "My address" : data['address'].toString();
+          blood_type = data['blood_type'] == null
+              ? "???"
+              : data['blood_type'].toString();
+          address = data['address'] == null
+              ? "My address"
+              : data['address'].toString();
           phone_number = data['contact_number'] == null
               ? "0123456789"
               : data['contact_number'].toString();
