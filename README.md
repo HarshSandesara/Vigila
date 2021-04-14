@@ -8,7 +8,9 @@ demand urgency. We propose a system to counter this and to respond to such emerg
 #### Other technologies: GeoFlutterFire
 
 ### How to run application:
-1. Install the application by downloading the given APK.
+1. Install the application by downloading the given APK (Link: https://drive.google.com/file/d/19LTCpAX4lYqOW44bFNuzNlM9faHXbPnn/view?usp=sharing)
+
+(**NOTE:** This is a prototype to demonstrate our project. In case of an actual emergency use this application **at your own discretion**.)
 
 2. Open the application.
 
