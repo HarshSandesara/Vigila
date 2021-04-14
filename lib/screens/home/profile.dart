@@ -37,9 +37,6 @@ class _ProfileState extends State<Profile> {
           blood_type = data['blood_type'] == null
               ? "???"
               : data['blood_type'].toString();
-          address = data['address'] == null
-              ? "My address"
-              : data['address'].toString();
           phone_number = data['contact_number'] == null
               ? "0123456789"
               : data['contact_number'].toString();
@@ -59,8 +56,7 @@ class _ProfileState extends State<Profile> {
                     child: Container(
                       alignment: Alignment(0.0, 2.5),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"),
+                        backgroundImage: AssetImage("lib/images/Profile.webp"),
                         radius: 60.0,
                       ),
                     ),
@@ -107,14 +103,6 @@ class _ProfileState extends State<Profile> {
                 ),
                 Text(
                   "Email ID: " + user.email,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black45,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.w300),
-                ),
-                Text(
-                  "Address: " + address,
                   style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black45,
