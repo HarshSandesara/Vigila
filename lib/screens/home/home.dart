@@ -145,12 +145,12 @@ class _EmergencyButtonState extends State<EmergencyButton> {
     if (_currentPosition != null) {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: Text(
-              "Message sent. Vigila will continue to send your location periodically to responders. If you wish to stop sending these messages, remove Vigila from the background"),
+              "Message sent. Vigila will continue to send your location periodically to responders. If you wish to stop sending these messages, remove Vigila from the background."),
           duration: Duration(seconds: 3)));
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(
           content: Text("Getting Location..."),
-          duration: Duration(seconds: 2)));
+          duration: Duration(seconds: 3)));
     }
   }
 
