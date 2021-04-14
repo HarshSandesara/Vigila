@@ -1,16 +1,24 @@
-# vigila
 
-A new Flutter project.
+### List of technologies: 
+#### Application development: Flutter
+#### Database: Firebase
+#### Other technologies: GeoFlutterFire
 
-## Getting Started
+### How to run application:
+1. Install the application by downloading the given APK.
 
-This project is a starting point for a Flutter application.
+2. Open the application.
 
-A few resources to get you started if this is your first Flutter project:
+3. Read the introduction screen that explains the features of the application.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+4. Sign in/register to the application. If you are a new user, enter all your personal and emergency information. If you are an existing user, update your personal and emergency information.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+5. The application requires you to keep your location on at all times, and permission to send SMS to civilians and emergency contacts. When prompted, allow location and message access to the application.
+
+6. The application regularly prompts you to read the first aid guidelines whenever you open the application. Ensure that you keep yourself updated with the information.
+
+7. The application presents four options:
+a. The Guidelines Tab: Use it to get first aid information and emergency response action when you are aiding a victim.
+b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
+c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
+d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
