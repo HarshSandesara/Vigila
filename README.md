@@ -1,3 +1,6 @@
+## Vigila - A General Safety Application
+Most safety applications already existing in the market send SOS messages to the victim’s saved contacts and the police, which could prove to be slow in situations which
+demand urgency. We propose a system to counter this and to respond to such emergencies. We store real-time location of our users and when anyone presses the SOS button, all users in a 100 meter radius, around that user, are notified about the emergency along with the coordinates of the victim. Our application also maintains a comprehensive first-aid and emergency response guide which the users can peruse so they can be more helpful in such situations.
 
 ### List of technologies: 
 #### Application development: Flutter
