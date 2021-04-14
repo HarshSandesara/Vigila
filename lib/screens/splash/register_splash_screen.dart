@@ -13,7 +13,7 @@ class _RegisterSplashScreen extends State<RegisterSplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Navigator.of(context).pop());
+    Timer(Duration(seconds: 3), () => Navigator.of(context).pop());
   }
 
   @override
