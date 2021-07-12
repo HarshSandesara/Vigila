@@ -24,13 +24,43 @@ demand urgency. We propose a system to counter this and to respond to such emerg
 
 7. The application presents four options:
 
-  a. The Guidelines Tab: Use it to get first aid information and emergency response action when you are aiding a victim.
+    a. The Guidelines Tab: Use it to get first aid information and emergency response action when you are aiding a victim.
 
-  b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
+    b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
 
-  c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
+    c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
 
-  d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
+    d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
 
 ### Screenshots
-![Trippophobia](https://drive.google.com/file/d/14CGKUzsK-mT85axVWBKCWVoqDVie7ZBz/view)
+
+<div align="center">
+  <img alt="Signin Screen" src="app_screenshots/screen1.png" height="700"><br>
+  <em>Signin Screen</em><br><br>
+</div>
+
+ 
+ 
+<div align="center">
+  <img alt="Sending Alert using the Application" src="app_screenshots/screen2.png" height="700"><br>
+  <em>Sending Alert using the Application</em><br><br>  
+</div>
+  
+  
+  
+<div align="center">
+  <img alt="Emergency Contacts Screen" src="app_screenshots/screen3.png" height="700" hspace="100"><br>
+  <em>Emergency Contacts Screen</em><br><br>
+</div>  
+
+
+<div align="center">
+  <img alt="Guidelines" src="app_screenshots/screen4.png" height="700"><br>
+  <em>Guidelines</em><br><br>
+</div>  
+
+
+  
+
+  
+  
