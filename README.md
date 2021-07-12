@@ -27,3 +27,6 @@ a. The Guidelines Tab: Use it to get first aid information and emergency respons
 b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
 c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
 d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
+
+### Screenshots
+![Trippophobia](https://drive.google.com/file/d/14CGKUzsK-mT85axVWBKCWVoqDVie7ZBz/view)
