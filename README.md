@@ -23,13 +23,14 @@ demand urgency. We propose a system to counter this and to respond to such emerg
 6. The application regularly prompts you to read the first aid guidelines whenever you open the application. Ensure that you keep yourself updated with the information.
 
 7. The application presents four options:
-a. The Guidelines Tab: Use it to get first aid information and emergency response action when you are aiding a victim.
 
-b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
+  a. The Guidelines Tab: Use it to get first aid information and emergency response action when you are aiding a victim.
 
-c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
+  b. The Home Tab: When you are in an emergency situation, press the S.O.S. button on this screen to alert your emergency contacts and nearby civilians, and to send them your location.
 
-d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
+  c. The Profile Tab: This shows the basic information of every user, including any information that might be needed in an emergency situation. Regularly update your information on this screen.
+
+  d. The Emergency Contacts Tab: Use it to add, update, delete, and call your emergency contacts.
 
 ### Screenshots
 ![Trippophobia](https://drive.google.com/file/d/14CGKUzsK-mT85axVWBKCWVoqDVie7ZBz/view)
